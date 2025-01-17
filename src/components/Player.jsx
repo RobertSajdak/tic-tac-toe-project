@@ -5,14 +5,20 @@ export default function Player({ name, symbol }) {
 	const [isEditing, setIsEditing] = useState(false);
 
 	// Funkcja obsługi kliknięcia.
+	// Dobra praktyka i rekomendacja React:
+	// Podczas aktualizacji stanu komponentu w oparciu o poprzednią wartość tego stanu, przekazuję funkcję
+	// jako argument do funkcji aktualizującej stan, zamiast nową wartość stanu, który chcę otrzymać po kliknięciu.
+	// Funkcja strzałkowa (arrow function) zostanie wywołana w React i automatycznie zaczyta aktualną wartość stanu.
 	function handleEditClick() {
-		setIsEditing(true);
+		setIsEditing((editing) => !editing);
 	}
 
 	let playerName = <span className="player-name">{name}</span>;
+	let btnCaption = "Edit";
 
 	if (isEditing) {
-		playerName = <input type="text" required />;
+		playerName = <input type="text" required value={name}/>;
+		btnCaption = "Save";
 	}
 
 	return (
@@ -21,7 +27,7 @@ export default function Player({ name, symbol }) {
 				{playerName}
 				<span className="player-symbol">{symbol}</span>
 			</span>
-			<button onClick={handleEditClick}>Edit</button>
+			<button onClick={handleEditClick}>{btnCaption}</button>
 		</li>
 	);
 }
