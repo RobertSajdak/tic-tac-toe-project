@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { createLogger } from 'vite';
 
 // Komponent gracza.
 export default function Player({ initialName, symbol }) {
