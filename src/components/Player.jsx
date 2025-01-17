@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Komponent gracza.
-export default function Player({ initialName, symbol }) {
+export default function Player({ initialName, symbol, isActive }) {
 	const [playerName, setPlayerName] = useState(initialName);
 	const [isEditing, setIsEditing] = useState(false);
 
@@ -11,7 +11,7 @@ export default function Player({ initialName, symbol }) {
 	// jako argument do funkcji aktualizującej stan, zamiast nową wartość stanu, który chcę otrzymać po kliknięciu.
 	// Funkcja strzałkowa (arrow function) zostanie wywołana w React i automatycznie zaczyta aktualną wartość stanu.
 	function handleEditClick() {
-		setIsEditing((editing) => !editing);
+		setIsEditing(editing => !editing);
 	}
 
 	function handleChange(event) {
@@ -19,15 +19,17 @@ export default function Player({ initialName, symbol }) {
 	}
 
 	let editablePlayerName = <span className="player-name">{playerName}</span>;
-	let btnCaption = "Edit";
+	let btnCaption = 'Edit';
 
 	if (isEditing) {
-		editablePlayerName = <input type="text" required value={playerName} onChange={handleChange}/>;
-		btnCaption = "Save";
+		editablePlayerName = (
+			<input type="text" required value={playerName} onChange={handleChange} />
+		);
+		btnCaption = 'Save';
 	}
 
 	return (
-		<li>
+		<li className={isActive ? 'active' : undefined}>
 			<span className="player">
 				{editablePlayerName}
 				<span className="player-symbol">{symbol}</span>

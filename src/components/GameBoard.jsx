@@ -7,16 +7,18 @@ const initialGameBoard = [
 ];
 
 // Komponent z dynamicznym wyświetlaniem siatki pól do gry.
-export default function GameBoard() {
+export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 	// Celem hook'a "useState" tutaj jest zarządzanie stanem i aktualizowanie stanu planszy gry.
 	const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
 	function handleSelectSquare(rowIndex, colIndex) {
 		setGameBoard(prevGameBoard => {
 			const updatedBoard = [...prevGameBoard.map(innerArray => [...innerArray])];
-			updatedBoard[rowIndex][colIndex] = 'X';
+			updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
 			return updatedBoard;
 		});
+
+		onSelectSquare();
 	}
 
 	return (
